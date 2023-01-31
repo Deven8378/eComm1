@@ -8,4 +8,4 @@ require_once 'app/core/init.php';
 //include can be less fatal
 // _once is to enure things are included only once
 
-new App;
+new app\core\App;
