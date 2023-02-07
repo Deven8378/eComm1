@@ -17,11 +17,12 @@ class Main extends \app\core\Controller{
 	function logUser() {
 		if (isset($_POST['action'])) {
 			//data is sent
+			$userLog = new \app\models\UserLog();
+			$userLog->name = $_POST['name'];
+			$userLog->insert();
 			//open the log.txt file for appending
 			//ToDo: lock the file for reserved access
-			$fh = fopen('log.txt', 'a');
-			fwrite($fh, "$_POST[name] has visited!\n");
-			fclose($fh);
+			
 			header('location:/Main/logUser');
 
 		} else {
@@ -29,5 +30,17 @@ class Main extends \app\core\Controller{
 			$this->view('Main/logUser');
 
 		}
+	}
+
+	function viewUserLog() {
+		$userLog = new \app\models\UserLog();
+		$contents = $userLog->getAll();
+		$this->view("Main/userLogList", $contents);
+	}
+
+	function logDelete($LineNumber) {
+		$userLog = new \app\models\UserLog();
+		$userLog->delete($LineNumber);
+		header('location:/Main/viewUserLog'); //redirect
 	}
 }
