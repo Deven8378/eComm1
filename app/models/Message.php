@@ -27,8 +27,9 @@ class Message extends \app\core\Model {
 		$SQL = "SELECT * FROM message WHERE sender=:sender OR receiver=:receiver";
 
 		$STH = $this->connection->prepare($SQL);
-		$STH->execute();
 		$data = ['receiver'=>$user_id, 'sender'->$user_id];
+
+		$STH->execute($data);
 		$STH->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\Message');
 		return $STH->fetchAll();
 
