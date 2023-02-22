@@ -23,8 +23,13 @@ class Message extends \app\core\Model {
 	}
 
 	public function getAllForUser($user_id) {
+
+	$SQL ="SELECT message.message_id, message.message, message.timestamp, sendertable.username AS sender_name, `user` . `username` AS receiver_name FROM `message` JOIN `user` AS sender_table ON `message` . `sender` = sendertable.`user_id` JOIN `user` ON `user` . `user_id` = message.receiver WHERE sender=:sender or receiver=:receiver";
+
+
+
 		# the data we want to insert
-		$SQL = "SELECT * FROM message WHERE sender=:sender OR receiver=:receiver";
+		//$SQL = "SELECT * FROM message WHERE sender=:sender OR receiver=:receiver";
 
 		$STH = $this->connection->prepare($SQL);
 		$STH->execute();
@@ -38,6 +43,7 @@ class Message extends \app\core\Model {
 		$STH = $this->connection->prepare($SQL);
 		$data = ['message_id'=>$message_id, 'receiver'=>$user_id];
 		$STH->execute($data);
+		return $STH->rowCount();
 	}
 
 		
