@@ -1,5 +1,5 @@
 <?php
-namespace app\controllers
+namespace app\controllers;
 
 class Profile extends \app\core\Controller {
 

@@ -1,11 +1,10 @@
 <?php $this->view('shared/header','Register your account'); ?>
 User Profile!!!
-<a href='/Profile/index'> </a>
+<a href='/Profile/index'> See my profile </a>
 <h1> Messages</h1>
 
 <h2> My messages </h2>
 
-<h2> Send a message </h2>
 <table> <tr> <th> sender </th> <th> receiver </th> <th> message </th> <th> time </th> <th> actions </th> </tr>
 <?php
 //display all messages
@@ -20,7 +19,7 @@ foreach ($data as $message) {
 }
 ?>
 </table>
-
+<h2> Send a message </h2>
 <p> Send a message using the following form </p> 
 <form action="/Message/send" method='post'>
 	<label> To: <input type="text" name="receiver"> </label>

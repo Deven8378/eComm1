@@ -7,7 +7,7 @@ class User extends \app\core\Controller {
 			if (isset($_POST['action'])) {
 			//process input
 			$user = new \app\models\User();
-			$user->getByUsername($_POST['username']);
+			$user = $user->getByUsername($_POST['username']);
 			if ($user) {
 				if (password_verify($_POST['password'], $user->password_hash)) {
 					//the user is correct
@@ -59,7 +59,7 @@ class User extends \app\core\Controller {
 
 	public function profile() {
 		if (!isset($_SESSION['user_id'])) {
-			header('location::/User/index');
+			header('location:/User/index');
 			return;
 		}
 		$message = new \app\models\Message();

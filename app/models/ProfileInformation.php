@@ -12,7 +12,7 @@ class ProfileInformation extends \app\core\Model {
 		$SQL = "SELECT * FROM profile_information WHERE user_id=:user_id";
 		$STH = $this->connection->prepare($SQL);
 
-		$STH->execute('user_id'=>$user_id);
+		$STH->execute(['user_id'=>$user_id]);
 		$STH->setFetchMode(\PDO::FETCH_CLASS,'app\\models\\ProfileInformation');
 		return $STH->fetch();
 

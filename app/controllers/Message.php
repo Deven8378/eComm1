@@ -1,5 +1,5 @@
 <?php
-namespace app\controller;
+namespace app\controllers;
 
 class Message extends \app\core\Controller {
 
@@ -26,10 +26,10 @@ class Message extends \app\core\Controller {
 		$user_id = $_SESSION['user_id'];
 		$message = new \app\models\Message();
 		$success = $message->delete($message_id, $user_id);
-		if ($success) {
+		if ($success) 
 		header('location:/User/profile?success=Message deleted.');
 
-		} else 
+		else 
 		header('location:/User/profile?error=You are not allowed to delete this message');
 	}
 }
