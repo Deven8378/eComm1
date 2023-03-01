@@ -46,6 +46,8 @@ class Profile extends \app\core\Controller {
 			$profile->last_name = $_POST['last_name'];
 			$profile->middle_name = $_POST['middle_name'];
 
+			$this->addPicture($_SESSION['user_id']);
+
 			$success = $profile->update();
 
 			if ($success) {
@@ -57,6 +59,28 @@ class Profile extends \app\core\Controller {
 			$this->view('Profile/edit',$profile);
 		}
 
+	}
+
+	public function addPicture($user_id) {
+		if (isset($_FILES['profilePicture']) && ($_FILES['profilePicture']['error'] == UPLOAD_ERR_OK)) {
+			$info = getimagesize($_FILES['profilePicture']['tmp_name']);
+
+			$allowedTypes = ["IMAGETYPE_JPEG" => ".jpg","IMAGETYPE_PNG" => ".png", "IMAGETYPE_GIF" => ".gif"]; 
+
+			if ($info == false) {
+				header('location:/Profile/index?error=Bad file format');
+			} else if (!array_key_exists($info[2], $allowedTypes)) { //File uploaded but check the image file type
+				header('location:/Profile/index?error=File type is not accepted');
+			} else {
+				//Save the image in the images folder
+				$path = getcwd().DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;
+				$fileName = uniqid().$allowedTypes[$info[2]];
+
+				move_uploaded_file($_FILES['profilePicture']['tmp_name'], $path.$fileName); 
+			}
+		} else {
+			$this->view("Profile/edit");
+		}
 	}
 }
 
